@@ -47,7 +47,7 @@ export default {
       showLngLat: this.field.withLatLng || false,
     }
   },
-  created() {
+  mounted() {
     console.log(this.value);
     this.addressData = {
       lat: this.value.lat || '',
