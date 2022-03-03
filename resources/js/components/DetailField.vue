@@ -4,7 +4,7 @@
             <h4 class="font-normal text-80">{{field.name}}</h4>
         </div>
         <div class="w-3/4 py-4">
-            <p class="text-90">{{addressData.formatted_address}} | ({{addressData.latitude.toFixed(6)}}, {{addressData.longitude.toFixed(6)}})</p>
+            <p class="text-90">{{addressData.formatted_address}}</p>
         </div>
     </div>
 </template>

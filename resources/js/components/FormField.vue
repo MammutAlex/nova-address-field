@@ -12,19 +12,6 @@
                 :country="field.countries"
                 v-on:placechanged="getAddressData">
             </vue-google-autocomplete>
-            <div class="flex w-full pt-2">
-                <div class="flex w-1/2">
-                    <checkbox
-                        :checked="field.withMap"
-                        @input="toggleMap"
-                        class="py-2 pr-2"
-
-                    />
-                    <label @click="toggleMap" class="inline-block text-80 pt-2 leading-tight">Переглянути на карті</label>
-                </div>
-            </div>
-
-            <div class="google-map w-full" :id="mapName" v-show="field.withMap"></div>
 
             <p v-if="hasError" class="my-2 text-danger">
                 {{ firstError }}
@@ -47,28 +34,15 @@ export default {
 
     data: function () {
         return {
-            mapName: this.name + "-map",
-            mapOptions: {
-                center: new google.maps.LatLng(40.730610, -98.935242),
-                zoom: 5
-            },
             address: '',
             addressData: {
               latitude: this.field.lat || '',
               longitude: this.field.lng || '',
               address: ''
             },
-            map: null,
             marker: null,
             geocoder: new google.maps.Geocoder,
-            showMap: this.field.withMap || false,
             showLngLat: this.field.withLatLng || false,
-        }
-    },
-
-    mounted: function () {
-        if(this.field.withMap) {
-            this.initMap()
         }
     },
 
@@ -77,78 +51,7 @@ export default {
             this.addressData.latitude = addressData.latitude;
             this.addressData.longitude = addressData.longitude;
             this.addressData.formatted_address = placeResultData.formatted_address;
-            this.refreshMap()
             this.$emit('addressChanged', this.addressData)
-        },
-
-        refreshAddressData() {
-            this.geocode(new google.maps.LatLng(this.addressData.latitude, this.addressData.longitude))
-            this.refreshMap()
-        },
-
-        toggleMap() {
-            this.field.withMap = !this.field.withMap
-        },
-        toggleLatLng() {
-            this.field.withLatLng = !this.field.withLatLng
-        },
-
-        initMap() {
-            console.log('hsbfjsdbfjdbjdb')
-            const element = document.getElementById(this.mapName);
-            let center =  new google.maps.LatLng(this.addressData.latitude, this.addressData.longitude)
-
-            // setup map options
-            const options = {
-                zoom: this.field.zoom || 5,
-                center: center
-            };
-            // initialize the map
-            this.map = new google.maps.Map(element, options);
-
-            // get formatted address for the latitude and longitude
-            if(!this.addressData.address) {
-                this.geocode(center)
-            }
-            // adding initial marker
-            this.marker = new google.maps.Marker({
-                position: center,
-                map: this.map
-            });
-
-
-
-            var _this = this;
-            google.maps.event.addListener(this.map, 'click', function(event) {
-                if (_this.marker) {
-                    _this.marker.setMap(null);
-                }
-                _this.marker = new google.maps.Marker({
-                    position: event.latLng,
-                    map: _this.map
-                });
-                _this.geocode(event.latLng)
-            });
-        },
-
-        refreshMap() {
-            if(this.map === null) {
-                return;
-            }
-            let LatLng = new google.maps.LatLng(this.addressData.latitude, this.addressData.longitude)
-            this.map.setCenter(LatLng);
-            if (this.marker) {
-                this.marker.setMap(null)
-            }
-
-            this.marker = new google.maps.Marker({
-                position: LatLng,
-                map: this.map
-            });
-        },
-
-        resetMarker() {
-            this.marker.setMap(null)
         },
 
         geocode(latLng) {
@@ -201,31 +104,13 @@ export default {
         },
     },
 
-    computed: {
-        computed() {
-
-        }
-    },
-
     watch: {
         'addressData' : {
             handler: function (newAddressData) {
                 this.value = JSON.stringify(newAddressData)
-                this.mapOptions.center = new google.maps.LatLng(newAddressData.latitude, newAddressData.longitude)
             },
             deep: true
         }
     }
 }
 </script>
-
-
-<style scoped>
-    .google-map {
-        width: 720px;
-        height: 300px;
-        margin: 0 auto;
-        background: gray;
-        border:solid 1px #ccc;
-    }
-</style>

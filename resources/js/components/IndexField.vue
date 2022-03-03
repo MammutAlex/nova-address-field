@@ -1,5 +1,5 @@
 <template>
-    <span class="text-90">{{addressData.formatted_address}} <br/> ({{addressData.latitude.toFixed(6)}}, {{addressData.longitude.toFixed(6)}})</span>
+    <span class="text-90">{{addressData.formatted_address}}</span>
 </template>
 
 <script>
