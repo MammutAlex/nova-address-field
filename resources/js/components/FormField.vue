@@ -48,13 +48,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.value);
+    const value = JSON.parse(this.value);
     this.addressData = {
-      lat: this.value.lat || '',
-      lon: this.value.lng || '',
-      name: this.value.name || '',
-      country: this.value.country || '',
-      city: this.value.city || '',
+      lat: value.lat || '',
+      lon: value.lng || '',
+      name: value.name || '',
+      country: value.country || '',
+      city: value.city || '',
     }
   },
   methods: {
