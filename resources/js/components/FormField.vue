@@ -3,11 +3,11 @@
         <template slot="field">
 
             <vue-google-autocomplete
-                ref="address"
                 :id="field.attribute"
                 :dusk="field.attribute"
                 class="w-full form-control form-input form-input-bordered"
                 :class="errorClasses"
+                :value="addressData.name"
                 :placeholder="field.name"
                 :country="field.countries"
                 v-on:placechanged="getAddressData">
@@ -36,10 +36,11 @@ export default {
         return {
             address: '',
             addressData: {
-              latitude: this.field.lat || '',
-              longitude: this.field.lng || '',
-              address: '',
-              locality: '',
+              lat: this.field.lat || '',
+              lon: this.field.lng || '',
+              name: '',
+              country: '',
+              city: '',
             },
             marker: null,
             geocoder: new google.maps.Geocoder,
@@ -49,15 +50,15 @@ export default {
 
     methods: {
         getAddressData: function (addressData, placeResultData, id) {
-            this.addressData.latitude = addressData.latitude;
-            this.addressData.longitude = addressData.longitude;
-            this.addressData.locality = addressData.locality;
+            this.addressData.lat = addressData.latitude;
+            this.addressData.lon = addressData.longitude;
+            this.addressData.city = addressData.locality;
             this.addressData.country = addressData.country;
             this.addressData.administrative_area_level_1 = addressData.administrative_area_level_1;
             this.addressData.administrative_area_level_2 = addressData.administrative_area_level_2;
             this.addressData.postal_code = addressData.postal_code;
             this.addressData.route = addressData.route;
-            this.addressData.formatted_address = placeResultData.formatted_address;
+            this.addressData.name = placeResultData.formatted_address;
             this.$emit('addressChanged', this.addressData)
         },
 
