@@ -20,46 +20,7 @@
                         class="py-2 pr-2"
 
                     />
-                    <label @click="toggleMap" class="inline-block text-80 pt-2 leading-tight">Show Map</label>
-                </div>
-
-                <div class="flex w-1/2">
-                    <checkbox
-                        :checked="field.withLatLng"
-                        @input="toggleLatLng"
-                        class="py-2 pr-2"
-                    />
-                    <label @click="toggleLatLng" class="inline-block text-80 pt-2 leading-tight">Show Coordinations</label>
-                </div>
-            </div>
-            <div v-show="field.withLatLng" class="flex flex-wrap w-full">
-                <div class="flex w-1/2">
-                    <div class="w-1/5 py-3">
-                        <label class="inline-block text-80 pt-2 leading-tight" for="latitude">Lat</label>
-                    </div>
-                    <div class="py-3 pr-2 w-4/5">
-                        <input id="latitude" type="text"
-                               class="w-full form-control form-input form-input-bordered"
-                               :class="errorClasses"
-                               placeholder="long"
-                               v-model="addressData.latitude"
-                               v-on:change="refreshAddressData"
-                        />
-                    </div>
-                </div>
-                <div class="flex w-1/2">
-                    <div class="w-1/5 py-3">
-                        <label class="inline-block text-80 pt-2 leading-tight" for="longitude">Lng</label>
-                    </div>
-                    <div class="py-3 w-4/5">
-                        <input id="longitude" type="text"
-                               class="w-full form-control form-input form-input-bordered"
-                               :class="errorClasses"
-                               placeholder="long"
-                               v-model="addressData.longitude"
-                               v-on:change="refreshAddressData"
-                        />
-                    </div>
+                    <label @click="toggleMap" class="inline-block text-80 pt-2 leading-tight">Переглянути на карті</label>
                 </div>
             </div>
 
@@ -92,7 +53,11 @@ export default {
                 zoom: 5
             },
             address: '',
-            addressData: {latitude: this.field.lat || '', longitude: this.field.lng || '', address: ''},
+            addressData: {
+              latitude: this.field.lat || '',
+              longitude: this.field.lng || '',
+              address: ''
+            },
             map: null,
             marker: null,
             geocoder: new google.maps.Geocoder,
