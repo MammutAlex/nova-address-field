@@ -38,7 +38,8 @@ export default {
             addressData: {
               latitude: this.field.lat || '',
               longitude: this.field.lng || '',
-              address: ''
+              address: '',
+              locality: '',
             },
             marker: null,
             geocoder: new google.maps.Geocoder,
@@ -50,43 +51,14 @@ export default {
         getAddressData: function (addressData, placeResultData, id) {
             this.addressData.latitude = addressData.latitude;
             this.addressData.longitude = addressData.longitude;
+            this.addressData.locality = addressData.locality;
+            this.addressData.country = addressData.country;
+            this.addressData.administrative_area_level_1 = addressData.administrative_area_level_1;
+            this.addressData.administrative_area_level_2 = addressData.administrative_area_level_2;
+            this.addressData.postal_code = addressData.postal_code;
+            this.addressData.route = addressData.route;
             this.addressData.formatted_address = placeResultData.formatted_address;
             this.$emit('addressChanged', this.addressData)
-        },
-
-        geocode(latLng) {
-            let _this = this
-            this.geocoder.geocode({'location': latLng}, function(results, status) {
-                if (status === 'OK') {
-                    if (results[0]) {
-                        _this.addressData.latitude = parseFloat(latLng.lat().toFixed(6))
-                        _this.addressData.longitude = parseFloat(latLng.lng().toFixed(6))
-                        _this.addressData.formatted_address = results[0].formatted_address
-                        _this.$refs.address.update(results[0].formatted_address);
-                        _this.$emit('addressChanged', _this.addressData)
-                    } else {
-                        //window.alert('No results found');
-                    }
-                } else {
-                    _this.addressData.latitude = null
-                    _this.addressData.longitude = null
-                    _this.addressData.formatted_address = null
-                    _this.$refs.address.update('');
-                    _this.$emit('addressChanged', _this.addressData)
-                    console.log(status);
-                }
-            });
-        },
-
-        /*
-         * Set the initial, internal value for the field.
-         */
-        setInitialValue() {
-            this.value = this.field.value || ''
-            if(this.value) {
-                this.addressData = JSON.parse(this.value)
-                this.$refs.address.update(this.addressData.formatted_address);
-            }
         },
 
         /**
