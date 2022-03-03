@@ -47,7 +47,16 @@ export default {
       showLngLat: this.field.withLatLng || false,
     }
   },
-
+  created() {
+    console.log(this.value);
+    this.addressData = {
+      lat: this.value.lat || '',
+      lon: this.value.lng || '',
+      name: this.value.name || '',
+      country: this.value.country || '',
+      city: this.value.city || '',
+    }
+  },
   methods: {
     getAddressData: function (addressData, placeResultData, id) {
       this.addressData.lat = addressData.latitude;
@@ -60,16 +69,8 @@ export default {
       this.addressData.route = addressData.route;
       this.addressData.name = placeResultData.formatted_address;
       this.$emit('addressChanged', this.addressData)
+      this.value = JSON.stringify(this.addressData)
     },
   },
-
-  watch: {
-    'addressData': {
-      handler: function (newAddressData) {
-        this.value = JSON.stringify(newAddressData)
-      },
-      deep: true
-    }
-  }
 }
 </script>
