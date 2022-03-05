@@ -9,7 +9,6 @@
         :class="errorClasses"
         :value="addressData.name"
         :placeholder="field.name"
-        :country="field.countries"
         v-on:placechanged="getAddressData">
       </vue-google-autocomplete>
 
@@ -35,16 +34,8 @@ export default {
   data: function () {
     return {
       address: '',
-      addressData: {
-        lat: this.field.lat || '',
-        lon: this.field.lng || '',
-        name: this.field.name || '',
-        country: this.field.country || '',
-        city: this.field.city || '',
-      },
+      addressData: {},
       marker: null,
-      geocoder: new google.maps.Geocoder,
-      showLngLat: this.field.withLatLng || false,
     }
   },
   mounted() {
