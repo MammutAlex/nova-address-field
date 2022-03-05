@@ -38,6 +38,7 @@ export default {
     }
   },
   mounted() {
+    console.log(value);
     const value = JSON.parse(this.value);
     console.log(value);
     this.addressData = {
