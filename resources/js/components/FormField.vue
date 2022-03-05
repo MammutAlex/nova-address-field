@@ -7,6 +7,7 @@
         :dusk="field.attribute"
         class="w-full form-control form-input form-input-bordered"
         :class="errorClasses"
+        types=""
         :value="addressData.name"
         :placeholder="field.name"
         v-on:placechanged="getAddressData">
@@ -33,13 +34,12 @@ export default {
 
   data: function () {
     return {
-      address: '',
       addressData: {},
-      marker: null,
     }
   },
   mounted() {
     const value = JSON.parse(this.value);
+    console.log(value);
     this.addressData = {
       lat: value.lat || '',
       lon: value.lng || '',
