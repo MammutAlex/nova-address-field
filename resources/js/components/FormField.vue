@@ -38,15 +38,15 @@ export default {
     }
   },
   mounted() {
-    console.log(value);
-    const value = JSON.parse(this.value);
-    console.log(value);
-    this.addressData = {
-      lat: value.lat || '',
-      lon: value.lng || '',
-      name: value.name || '',
-      country: value.country || '',
-      city: value.city || '',
+    if(this.value){
+      const value = JSON.parse(this.value);
+      this.addressData = {
+        lat: value.lat || '',
+        lon: value.lng || '',
+        name: value.name || '',
+        country: value.country || '',
+        city: value.city || '',
+      }
     }
   },
   methods: {
